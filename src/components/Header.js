@@ -2,8 +2,11 @@ import React from "react";
 import { logoDark } from "../assets/index";
 import { cartImg } from "../assets/index";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const productData = useSelector((state)=>state.sabka.productData);
+  console.log(productData);
   return (
     <div className="w-full h-20 bg-white border-b-[1px] border-b-gray-800 sticky top-0 z-50">
       <div className="max-w-screen-xl h-full mx-auto flex item-center justify-between">
@@ -33,7 +36,7 @@ const Header = () => {
           <div className="relative">
             <img className="w-6" src={cartImg} alt="cartImg" />
             <span className="absolute w-6 top-2 left-0 text-sm flex items-center justify-center font-semibold">
-              0
+              {productData.length}
             </span>
           </div>
           <img
