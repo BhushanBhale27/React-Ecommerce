@@ -8,7 +8,7 @@ import {
   RouterProvider,
   ScrollRestoration,
 } from "react-router-dom";
-import Cart from "./components/Cart";
+import Cart from './pages/Cart';
 import { productsData } from "./api/Api";
 import Product from "./components/Product";
 

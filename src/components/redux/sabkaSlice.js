@@ -20,8 +20,40 @@ export const sabkaSlice = createSlice({
         state.productData.push(action.payload);
       }
     },
+    deleteItem: (state, action) => {
+      state.productData = state.productData.filter(
+        (item) => item._id !== action.payload
+      );
+    },
+    resetCart: (state) => {
+      state.productData = [];
+    },
+    increamentQuantity: (state, action) => {
+      const item = state.productData.find(
+        (item) => item._id === action.payload._id
+      );
+      if (item) {
+        item.quantity++;
+      }
+    },
+    decrementQuantity: (state, action) => {
+      const item = state.productData.find(
+        (item) => item._id === action.payload._id
+      );
+      if (item.quantity === 1) {
+        item.quantity = 1;
+      } else {
+        item.quantity--;
+      }
+    },
   },
 });
 
-export const { addToCart } = sabkaSlice.actions;
+export const {
+  addToCart,
+  deleteItem,
+  resetCart,
+  increamentQuantity,
+  decrementQuantity,
+} = sabkaSlice.actions;
 export default sabkaSlice.reducer;
