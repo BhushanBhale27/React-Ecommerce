@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const productData = useSelector((state) => state.sabka.productData);
+  const userInfo = useSelector((state) => state.sabka.userInfo);
+  console.log(userInfo);
   return (
     <div className="w-full h-20 bg-white border-b-[1px] border-b-gray-800 sticky top-0 z-50">
       <div className="max-w-screen-xl h-full mx-auto flex item-center justify-between">
@@ -41,15 +43,28 @@ const Header = () => {
             </div>
           </Link>
 
-          <img
-            className="w-8 h-8 rounded-full"
-            src="https://images.pexels.com/photos/264547/pexels-photo-264547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            alt="userLogo"
-          />
+          <Link to="/login">
+            <img
+              className="w-10 h-10 rounded-full"
+              src={
+                userInfo 
+                  ? userInfo.image
+                  : "https://images.pexels.com/photos/264547/pexels-photo-264547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              }
+              alt="userImage"
+            />
+            {console.log(userInfo)}
+          </Link>
+          {userInfo && (
+            <p className="text-base font-semibold underline underline-offset-2">
+              {userInfo.name}
+            </p>
+          )}
         </div>
       </div>
     </div>
   );
 };
+
 
 export default Header;

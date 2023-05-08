@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import CartItem from "../components/CartItem";
 import { useSelector } from "react-redux";
+import { toast ,ToastContainer} from "react-toastify";
 
 const Cart = () => {
   const productData = useSelector((state) => state.sabka.productData);
+  const userInfo = useSelector((state) => state.sabka.userInfo);
+  const [payNow, setPayNow] = useState(false);
   const [totalAmt, setTotalAmt] = useState("");
 
   useEffect(() => {
@@ -14,6 +17,15 @@ const Cart = () => {
     });
     setTotalAmt(price.toFixed(3));
   },[productData]);
+
+  const handelCheckout = () =>{
+    if(userInfo){
+      setPayNow(true)
+    }else{
+      toast.error("Please Sign In to Checkout")
+    }
+
+  }
   return (
     <div>
       <img
@@ -41,11 +53,23 @@ const Cart = () => {
             {" "}
             Total <span className="text-xl font-bold">₹ {totalAmt}</span>
           </p>
-          <button className="text-base bg-black text-white w-full py-3 mt-6 hover:bg-gray-800 duration-300">
+          <button onClick={handelCheckout} className="text-base bg-black text-white w-full py-3 mt-6 hover:bg-gray-800 duration-300">
             proceed to checkout
           </button>
         </div>
       </div>
+      <ToastContainer
+        position="top-left"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 };

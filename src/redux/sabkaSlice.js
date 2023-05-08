@@ -46,6 +46,13 @@ export const sabkaSlice = createSlice({
         item.quantity--;
       }
     },
+    // after login store user here
+    addUser: (state, action) => {
+      state.userInfo = action.payload;
+    },
+    removeUser: (state) => {
+      state.userInfo = null;
+    },
   },
 });
 
@@ -55,5 +62,7 @@ export const {
   resetCart,
   increamentQuantity,
   decrementQuantity,
+  addUser,
+  removeUser,
 } = sabkaSlice.actions;
 export default sabkaSlice.reducer;
