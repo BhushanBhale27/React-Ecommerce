@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   productData: [],
@@ -19,6 +20,15 @@ export const sabkaSlice = createSlice({
       } else {
         state.productData.push(action.payload);
       }
+      const email = action.email; // get user's email from the action
+      axios
+        .put(`https://crudcrud.com/api/${"dfbba6669b1440b6a9c289fc1ac8dccb"}/cart/${email}`, state.productData)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     deleteItem: (state, action) => {
       state.productData = state.productData.filter(

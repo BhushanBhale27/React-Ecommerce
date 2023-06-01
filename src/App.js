@@ -12,6 +12,8 @@ import Cart from "./pages/Cart";
 import { productsData } from "./api/Api";
 import Product from "./components/Product";
 import Login from "./pages/Login";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
 
 //create layout:-
 const Layout = () => {
@@ -40,9 +42,17 @@ const router = createBrowserRouter([
         element: <Product />,
       },
       {
+         path:"/aboutus",
+         element:<AboutUs />
+      },
+      {
+         path:"/contactus",
+         element:<ContactUs />
+      },
+      {
         path: "/cart",
         element: <Cart />,
-      },
+      }, 
       {
         path: "/login",
         element: <Login />,

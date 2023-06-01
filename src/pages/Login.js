@@ -1,4 +1,4 @@
-import React from "react";
+import React  from "react";
 import { githubLogo, googleLogo } from "../assets";
 import {
   GoogleAuthProvider,
@@ -6,15 +6,22 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/sabkaSlice";
 import { useNavigate } from "react-router-dom";
 import { removeUser } from "../redux/sabkaSlice";
+import SignupForm from "../components/SignupForm";
+import { useContext } from "react";
+import AuthContext from "../components/auth-context";
+
+
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   const handleGoogleLogin = (e) => {
@@ -42,8 +49,9 @@ const Login = () => {
     signOut(auth)
       .then(() => {
         dispatch(removeUser());
-        toast.success("Log Out Successfully!!");
-      })
+        toast.success("Log Out Successfully!!")
+        &&  authCtx.logout();
+      }) 
       .catch((error) => {
         console.log(error);
       });
@@ -51,9 +59,8 @@ const Login = () => {
 
   return (
     <div className="w-full flex flex-col items-center junstify-center gap-10 py-20">
-      <div>
-        <h2>Sign Up</h2>
-      </div>
+      <SignupForm />
+   
       <div className="w-full flex item-center justify-center gap-10">
         <div
           onClick={handleGoogleLogin}
