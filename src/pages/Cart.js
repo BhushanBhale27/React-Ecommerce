@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import CartItem from "../components/CartItem";
 import { useSelector } from "react-redux";
-import { toast ,ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
 
 const Cart = () => {
   const productData = useSelector((state) => state.sabka.productData);
@@ -16,16 +18,22 @@ const Cart = () => {
       return price;
     });
     setTotalAmt(price.toFixed(3));
-  },[productData]);
+  }, [productData]);
 
-  const handelCheckout = () =>{
-    if(userInfo){
-      setPayNow(true)
-    }else{
-      toast.error("Please Sign In to Checkout")
+  const handelCheckout = () => {
+    if (userInfo) {
+      setPayNow(true);
+    } else {
+      toast.error("Please Sign In to Checkout");
     }
+  };
 
-  }
+  const payment = async (token) => {
+    await axios.post("http://localhost:8000/pay", {
+      amount: totalAmt *100,
+      token: token,
+    });
+  };
   return (
     <div>
       <img
@@ -53,9 +61,25 @@ const Cart = () => {
             {" "}
             Total <span className="text-xl font-bold">₹ {totalAmt}</span>
           </p>
-          <button onClick={handelCheckout} className="text-base bg-black text-white w-full py-3 mt-6 hover:bg-gray-800 duration-300">
+          <button
+            onClick={handelCheckout}
+            className="text-base bg-black text-white w-full py-3 mt-6 hover:bg-gray-800 duration-300"
+          >
             proceed to checkout
           </button>
+          {payNow && (
+            <div className="w-full mt-3 flex items-center justify-center">
+              <StripeCheckout
+                stripeKey="pk_test_51N5QZbSAUWFE8hwST4qF0yU8rWv63yFAD7nlCFtOjbYuL3StLAoQ4azEt9yzLq646SVUjomYa5MQxc167UlIwDdv00rwNKhC30"
+                name="Sabka Store shooping"
+                amount={totalAmt * 100}
+                label="Pay to SabkaStore"
+                description={`Your Payment amount is $${totalAmt}`}
+                token={payment}
+                email={userInfo.email}
+              />
+            </div>
+          )}
         </div>
       </div>
       <ToastContainer

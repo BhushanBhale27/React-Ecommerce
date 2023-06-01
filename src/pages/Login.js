@@ -51,6 +51,9 @@ const Login = () => {
 
   return (
     <div className="w-full flex flex-col items-center junstify-center gap-10 py-20">
+      <div>
+        <h2>Sign Up</h2>
+      </div>
       <div className="w-full flex item-center justify-center gap-10">
         <div
           onClick={handleGoogleLogin}
